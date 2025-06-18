@@ -1,8 +1,12 @@
 from drf_spectacular.utils import OpenApiParameter, extend_schema
+from drf_spectacular.types import OpenApiTypes
+
 from rest_framework import status, viewsets
 from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
+from rest_framework.parsers import JSONParser
 
 from recipes.models import Recipe
 from recipes.serializers.recipe import RecipeSerializer
@@ -61,7 +65,17 @@ class RecipeViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 
+@extend_schema(
+    request=AuthTokenSerializer,
+    responses={
+        200: OpenApiTypes.OBJECT,
+        400: OpenApiTypes.OBJECT,
+    },
+    description="Obtain an authentication token for a user.",
+)
 class CustomAuthToken(ObtainAuthToken):
+    parser_classes = [JSONParser]
+
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(
             data=request.data, context={"request": request}
@@ -69,7 +83,7 @@ class CustomAuthToken(ObtainAuthToken):
 
         if serializer.is_valid():
             user = serializer.validated_data["user"]
-            token, created = Token.objects.get_or_create(user=user)
+            token, _ = Token.objects.get_or_create(user=user)
 
             return Response(
                 {"token": token.key, "user_id": user.id, "username": user.username}

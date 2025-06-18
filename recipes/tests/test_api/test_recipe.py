@@ -56,7 +56,7 @@ class RecipeAPITest(APITestCase):
             "steps": [{"instructions": "Cortar maçã", "order": 1}],
             "title": "Torta",
             "description": "de maçã",
-            "user": self.user.id,
+            "username": self.user.username,
         }
 
         # assertions
@@ -74,7 +74,7 @@ class RecipeAPITest(APITestCase):
             "steps": [{"instructions": "Cortar maçã", "order": 1}],
             "title": "Torta",
             "description": "de maçã",
-            "user": self.user.id,
+            "username": self.user.username,
         }
 
         # assertions
