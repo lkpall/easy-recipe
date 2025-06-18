@@ -1,0 +1,12 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+*.py[cod]
+*.sqlite3
+*.log
+*.egg-info/
+.mypy_cache/
+.poetry/
+docker-compose.override.yml

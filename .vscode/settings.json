@@ -1,0 +1,13 @@
+{
+    "editor.codeActionsOnSave": {
+        "source.sortImports": "always",
+        "source.organizeImports": "always"
+    },
+    "editor.formatOnSave": true,
+    "python.analysis.autoFormatStrings": true,
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.fixAll": [
+        "source.unusedImports",
+        "source.convertImportFormat"
+    ],
+}

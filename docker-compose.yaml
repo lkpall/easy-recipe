@@ -1,0 +1,27 @@
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DEBUG=True
+
+  db:
+    container_name: postgres_db
+    image: postgres:16.6
+    environment:
+      POSTGRES_DB: easy_recipe
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: workalove
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  pg_data:
